@@ -21,15 +21,16 @@ Input-SHA256: 3f941b3b89cf7b8370ceb83cc76d2120d471b58735d8ca60238a751a48d7f72f l
 Input-SHA256: a2010f343487d3f7618affe54f789f5487602331c0a8d03f49e9a7c547cf0499 licenses/CC0-1.0.txt
 Input-SHA256: 22c1bd99806822d9b184c4e5079ff3845b1e9fcaaabfd3a6e48dd9f443fd4cff licenses/QuickJS-source.txt
 Input-SHA256: 96f73f9d2a16c21a36b418f06073be26e7d6d5e7c1bc99756b21a4f2c74ef171 licenses/QuickJS.txt
-Input-SHA256: a754355f3b49ef0cd20e2a65f29a45b3164693d1c929474fa90b4e635d9b90a4 licenses/README.md
+Input-SHA256: 6e4fa5cca895b338b785bba62f75e87751e419bfc8d0d4780b1e0bbeb453db3d licenses/README.md
 Input-SHA256: e7a93b009565cfce55919a381437ac4db883e9da2126fa28b91d12732bc53d96 licenses/Unicode.txt
+Input-SHA256: 87e7f51a9694a00d84da62b8f5d02dd2ae152226a2a493b621971fa3c2e6767d licenses/Visual-C-Runtime.txt
 Input-SHA256: 0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594 licenses/Wuffs-LICENSE-APACHE.txt
 Input-SHA256: bb811a4b485eac3caeb8bdc58bbafb355fbcb6116010a7ea9179e5c70b0bc878 licenses/Wuffs-LICENSE-MIT.txt
 Input-SHA256: f8ac2c75e7f629a87565c80d61ff9fe5aa15cdea0bda997d52a4dc13fdbd19cb licenses/Wuffs-LICENSE.txt
 Input-SHA256: 5c537d6853e005298a285d508cff9ac7192cea23576c840d485b2b586a7ff177 licenses/Zig.txt
 Input-SHA256: d25e82e26acd42ca3ccc9993622631163425b869b9e16284226d534cff6470f2 licenses/highway-BSD3.txt
 Input-SHA256: 43070e2d4e532684de521b885f385d0841030efa2b1a20bafb76133a5e1379c1 licenses/highway.txt
-Input-SHA256: 3d021fc839b8da87824d5ae085e1c3723d59223a5d7b80bd92f8ef3ed6c4ede4 licenses/inventory.json
+Input-SHA256: c11a7d27b17006542c8208827d57bff486451d05be61d274e770835d686adb4a licenses/inventory.json
 Input-SHA256: f9bc4423732350eb0b3f7ed7e91d530298476f8fec0c6c427a1c04ade22655af licenses/musl.txt
 Input-SHA256: 204bbed08ddeeecb362b4da36d3479a0167b7356a9d6024a24f9833affbe228a licenses/simdutf-TH.txt
 Input-SHA256: fc8dbc04e03ad4efc08a647ffe7f995b811a95bc04c0e85a56d5277c6593fa5f licenses/simdutf.txt
@@ -18551,6 +18552,46 @@ bzip2/libbzip2 version 1.1.0 of 6 September 2010
 --------------------------------------------------------------------------
 
 
+
+
+----------------------------------------------------------------------
+Microsoft Visual C++ runtime (Windows packages)
+https://learn.microsoft.com/en-us/visualstudio/releases/2022/redistribution
+
+--- licenses/Visual-C-Runtime.txt ---
+MICROSOFT SOFTWARE LICENSE TERMS
+MICROSOFT VISUAL C++ 2015 - 2022 RUNTIME
+These license terms are an agreement between Microsoft Corporation (or based on where you live, one of its affiliates) and you. They apply to the software named above. The terms also apply to any Microsoft services or updates for the software, except to the extent those have different terms.
+IF YOU COMPLY WITH THESE LICENSE TERMS, YOU HAVE THE RIGHTS BELOW.
+INSTALLATION AND USE RIGHTS.
+You may install and use any number of copies of the software.
+TERMS FOR SPECIFIC COMPONENTS.
+Microsoft Platforms. The software may include components from Microsoft Windows; Microsoft Windows Server; Microsoft SQL Server; Microsoft Exchange; Microsoft Office; and Microsoft SharePoint. These components are governed by separate agreements and their own product support policies, as described in the Microsoft “Licenses” folder accompanying the software, except that, if license terms for those components are also included in the associated installation directory, those license terms control.
+Third Party Components. The software may include third party components with separate legal notices or governed by other agreements, as may be described in the notices file(s) accompanying the software.
+SCOPE OF LICENSE. The software is licensed, not sold. This agreement only gives you some rights to use the software. Microsoft reserves all other rights. Unless applicable law gives you more rights despite this limitation, you may use the software only as expressly permitted in this agreement. In doing so, you must comply with any technical limitations in the software that only allow you to use it in certain ways. You may not
+work around any technical limitations in the software;
+reverse engineer, decompile or disassemble the software, or otherwise attempt to derive the source code for the software except, and only to the extent required by third party licensing terms governing the use of certain open source components that may be included in the software;
+remove, minimize, block or modify any notices of Microsoft or its suppliers in the software;
+use the software in any way that is against the law;
+share, publish, rent or lease the software; or
+provide the software as a stand-alone offering or combined with any of your applications for others to use, or transfer the software or this agreement to any third party.
+EXPORT RESTRICTIONS. You must comply with all domestic and international export laws and regulations that apply to the software, which include restrictions on destinations, end users, and end use. For further information on export restrictions, visit www.microsoft.com/exporting.
+SUPPORT SERVICES. Because this software is “as is,” we may not provide support services for it.
+ENTIRE AGREEMENT. This agreement, and the terms for supplements, updates, Internet-based services and support services that you use, are the entire agreement for the software and support services.
+APPLICABLE LAW. If you acquired the software in the United States, Washington law applies to interpretation of and claims for breach of this agreement, and the laws of the state where you live apply to all other claims. If you acquired the software in any other country, its laws apply.
+CONSUMER RIGHTS; REGIONAL VARIATIONS. This agreement describes certain legal rights. You may have other rights, including consumer rights, under the laws of your state or country. Separate and apart from your relationship with Microsoft, you may also have rights with respect to the party from which you acquired the software. This agreement does not change those other rights if the laws of your state or country do not permit it to do so. For example, if you acquired the software in one of the below regions, or mandatory country law applies, then the following provisions apply to you:
+	•	Australia. You have statutory guarantees under the Australian Consumer Law and nothing in this agreement is intended to affect those rights.
+	•	Canada. If you acquired this software in Canada, you may stop receiving updates by turning off the automatic update feature, disconnecting your device from the Internet (if and when you re-connect to the Internet, however, the software will resume checking for and installing updates), or uninstalling the software. The product documentation, if any, may also specify how to turn off updates for your specific device or software.
+	•	Germany and Austria.
+(i)	Warranty. The properly licensed software will perform substantially as described in any Microsoft materials that accompany the software. However, Microsoft gives no contractual guarantee in relation to the licensed software.
+(ii)	Limitation of Liability. In case of intentional conduct, gross negligence, claims based on the Product Liability Act, as well as, in case of death or personal or physical injury, Microsoft is liable according to the statutory law.
+Subject to the foregoing clause (ii), Microsoft will only be liable for slight negligence if Microsoft is in breach of such material contractual obligations, the fulfillment of which facilitate the due performance of this agreement, the breach of which would endanger the purpose of this agreement and the compliance with which a party may constantly trust in (so-called "cardinal obligations"). In other cases of slight negligence, Microsoft will not be liable for slight negligence.
+DISCLAIMER OF WARRANTY. THE SOFTWARE IS LICENSED “AS-IS.” YOU BEAR THE RISK OF USING IT. MICROSOFT GIVES NO EXPRESS WARRANTIES, GUARANTEES OR CONDITIONS. TO THE EXTENT PERMITTED UNDER YOUR LOCAL LAWS, MICROSOFT EXCLUDES THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT.
+LIMITATION ON AND EXCLUSION OF DAMAGES. YOU CAN RECOVER FROM MICROSOFT AND ITS SUPPLIERS ONLY DIRECT DAMAGES UP TO U.S. $5.00. YOU CANNOT RECOVER ANY OTHER DAMAGES, INCLUDING CONSEQUENTIAL, LOST PROFITS, SPECIAL, INDIRECT OR INCIDENTAL DAMAGES.
+This limitation applies to (a) anything related to the software, services, content (including code) on third party Internet sites, or third party applications; and (b) claims for breach of contract, breach of warranty, guarantee or condition, strict liability, negligence, or other tort to the extent permitted by applicable law.
+It also applies even if Microsoft knew or should have known about the possibility of the damages. The above limitation or exclusion may not apply to you because your country may not allow the exclusion or limitation of incidental, consequential or other damages.
+
+EULA ID: Cpp_2015-2022_ENU.1033
 
 
 ----------------------------------------------------------------------

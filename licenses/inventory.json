@@ -45,6 +45,13 @@
   ],
   "components": [
     {
+      "name": "Microsoft Visual C++ runtime (Windows packages)",
+      "source": "https://learn.microsoft.com/en-us/visualstudio/releases/2022/redistribution",
+      "files": [
+        "licenses/Visual-C-Runtime.txt"
+      ]
+    },
+    {
       "name": "Ghostty (libghostty-vt)",
       "source": "https://github.com/ghostty-org/ghostty/tree/291fd050b9e9c293c8adb6a140742649b7e42d3a",
       "files": [

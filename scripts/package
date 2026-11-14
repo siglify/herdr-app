@@ -7,7 +7,7 @@
 # Linux: a folder holding herdr-app and the icon.
 # macOS: Herdr.app, signed with APPLE_CERTIFICATE_P12 when available,
 # otherwise ad hoc. The notarized DMG is a separate, non-blocking CI job.
-# Windows (Git Bash): a folder holding herdr-app.exe and the icon.
+# Windows (Git Bash): a folder holding herdr-app.exe, its CRT DLLs and icon.
 # Windows has curl and tar too, so the app updates the same way.
 # No core inside: the installer and the app install the core's own release
 # (distribution/core-version is the oldest core this app works with).
@@ -24,8 +24,6 @@ if [[ -n $triple ]]; then
     *-windows-*) os=windows ;;
     *) echo "package: unsupported target $triple" >&2; exit 1 ;;
   esac
-  arch=${triple%%-*}
-  bin=target/$triple/release
 else
   case "$(uname -s)" in
     Linux) os=linux ;;
@@ -33,6 +31,20 @@ else
     MINGW* | MSYS* | CYGWIN*) os=windows ;;
     *) echo "package: unsupported OS $(uname -s)" >&2; exit 1 ;;
   esac
+fi
+# Windows shell architecture can differ from Rust's target. Use the same
+# explicit target for compilation, output paths, and CRT selection.
+if [[ $os == windows ]]; then
+  triple=${triple:-${CARGO_BUILD_TARGET:-$(rustc -vV | sed -n 's/^host: //p')}}
+  case "$triple" in
+    x86_64-pc-windows-msvc | aarch64-pc-windows-msvc) ;;
+    *) echo "package: unsupported Windows target $triple" >&2; exit 1 ;;
+  esac
+fi
+if [[ -n $triple ]]; then
+  arch=${triple%%-*}
+  bin=target/$triple/release
+else
   arch=$(uname -m)
   bin=target/release
 fi
@@ -64,7 +76,12 @@ out="dist/herdr-app-$target.tar.gz"
 if [[ $os == linux || $os == windows ]]; then
   dir="$work/herdr-app"
   mkdir -p "$dir"
-  if [[ $os == windows ]]; then cp "$bin/herdr-app.exe" "$dir/"; else cp "$bin/herdr-app" "$dir/"; fi
+  if [[ $os == windows ]]; then
+    cp "$bin/herdr-app.exe" "$dir/"
+    powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/windows-runtime.ps1 -Destination "$dir" -Target "$triple"
+  else
+    cp "$bin/herdr-app" "$dir/"
+  fi
   cp assets/icons/herdr-ui-icon-clean.svg "$dir/herdr-app.svg"
   cp LICENSE THIRD-PARTY-NOTICES "$dir/"
   notices_path=herdr-app/THIRD-PARTY-NOTICES

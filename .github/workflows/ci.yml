@@ -123,6 +123,10 @@ jobs:
       - name: Check release packaging
         if: matrix.platform == 'linux-x86_64'
         run: python3 -m unittest discover -s scripts -p test_distribution.py
+      - name: Check Windows installation payload
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: ./scripts/test-install-windows.ps1 -BuiltBinary "$PWD/target/debug/herdr-app.exe" -BuildTarget x86_64-pc-windows-msvc
       - name: Install Bun
         if: matrix.platform == 'linux-x86_64'
         run: curl -fsSL https://bun.sh/install | bash -s "bun-v1.4.4"

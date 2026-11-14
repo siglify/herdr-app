@@ -241,18 +241,35 @@ printf 'dev PATH added' >> "$3"''')
         sign.chmod(0o755)
         release = checkout / "target/release"
         release.mkdir(parents=True)
-        for name in ("herdr-app", "herdr-app.exe"):
-            (release / name).write_bytes(b"test binary")
-        self.stub("cargo", "exit 0")
-        for os_name, arch, target, prefix in (
-            ("Linux", "x86_64", "linux-x86_64", "herdr-app"),
-            ("Darwin", "arm64", "macos-aarch64", "Herdr.app/Contents/Resources"),
-            ("MINGW64_NT", "x86_64", "windows-x86_64", "herdr-app"),
+        (release / "herdr-app").write_bytes(b"test binary")
+        for triple in ("x86_64-pc-windows-msvc", "aarch64-pc-windows-msvc"):
+            output = checkout / "target" / triple / "release"
+            output.mkdir(parents=True)
+            (output / "herdr-app.exe").write_bytes(triple.encode())
+        cargo_log = self.bin / "cargo-args"
+        self.stub("cargo", f'printf "%s\\n" "$*" > "{cargo_log}"')
+        self.stub("powershell.exe", '''[ "$1" = -NoProfile ] && [ "$2" = -ExecutionPolicy ] && [ "$3" = Bypass ] || exit 97
+[ "$4" = -File ] && [ "$5" = scripts/windows-runtime.ps1 ] || exit 97
+[ "$6" = -Destination ] && [ "$8" = -Target ] || exit 97
+printf '%s' "$9" > "$7/vcruntime140.dll"''')
+        for os_name, arch, target, prefix, host, args in (
+            ("Linux", "x86_64", "linux-x86_64", "herdr-app", "", ()),
+            ("Darwin", "arm64", "macos-aarch64", "Herdr.app/Contents/Resources", "", ()),
+            ("MINGW64_NT", "x86_64", "windows-x86_64", "herdr-app", "x86_64-pc-windows-msvc", ()),
+            # An x64 shell can run an ARM64 Rust toolchain, or explicitly cross-compile.
+            ("MINGW64_NT", "x86_64", "windows-aarch64", "herdr-app", "aarch64-pc-windows-msvc", ()),
+            ("MINGW64_NT", "x86_64", "windows-aarch64", "herdr-app", "x86_64-pc-windows-msvc", ("aarch64-pc-windows-msvc",)),
         ):
-            with self.subTest(target=target):
-                result = self.run_script(checkout / "scripts/package", os_name, arch)
+            with self.subTest(target=target, host=host, args=args):
+                self.stub("rustc", f'echo "host: {host}"')
+                result = self.run_script(checkout / "scripts/package", os_name, arch, *args)
                 self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
                 with tarfile.open(checkout / f"dist/herdr-app-{target}.tar.gz") as archive:
+                    if target.startswith("windows-"):
+                        triple = target.removeprefix("windows-") + "-pc-windows-msvc"
+                        self.assertIn(f"--target {triple}", cargo_log.read_text())
+                        self.assertEqual(archive.extractfile("herdr-app/herdr-app.exe").read(), triple.encode())
+                        self.assertEqual(archive.extractfile("herdr-app/vcruntime140.dll").read(), triple.encode())
                     for name in ("LICENSE", "THIRD-PARTY-NOTICES"):
                         self.assertEqual(
                             archive.extractfile(f"{prefix}/{name}").read(),

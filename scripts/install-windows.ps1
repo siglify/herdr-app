@@ -1,5 +1,7 @@
+param([string]$Target = $env:CARGO_BUILD_TARGET)
+
 # Builds this checkout and installs it for the current Windows user.
-function Install-HerdrAppFiles($Binary, $Icon, $Destination) {
+function Install-HerdrAppFiles($Binary, $Icon, $Destination, $RuntimeDirectory) {
     $ErrorActionPreference = "Stop"
     $Destination = [IO.Path]::GetFullPath($Destination)
     $stage = "$Destination.install-$([guid]::NewGuid().ToString('N'))"
@@ -9,6 +11,7 @@ function Install-HerdrAppFiles($Binary, $Icon, $Destination) {
         New-Item -ItemType Directory -Path $stage -Force | Out-Null
         Copy-Item -LiteralPath $Binary -Destination "$stage\herdr-app.exe"
         Copy-Item -LiteralPath $Icon -Destination "$stage\herdr-app.svg"
+        if ($RuntimeDirectory) { Get-ChildItem -LiteralPath $RuntimeDirectory -Filter *.dll -File | Copy-Item -Destination $stage }
         # Renaming the folder leaves an already running app alive.
         if (Test-Path -LiteralPath $Destination) {
             Rename-Item -LiteralPath $Destination -NewName (Split-Path $backup -Leaf)
@@ -45,10 +48,21 @@ if ($env:OS -ne "Windows_NT") { throw "This installer requires Windows." }
 
 Push-Location "$PSScriptRoot\.."
 try {
-    cargo build --release --locked --target-dir target
+    if (-not $Target) {
+        $Target = ((rustc -vV | Select-String '^host: ').ToString() -replace '^host: ', '')
+        if ($LASTEXITCODE) { throw "Cannot determine the Rust host target." }
+    }
+    if ($Target -notin @("x86_64-pc-windows-msvc", "aarch64-pc-windows-msvc")) {
+        throw "Unsupported Windows target: $Target"
+    }
+    cargo build --release --locked --target-dir target --target $Target
     if ($LASTEXITCODE) { throw "Herdr build failed (exit $LASTEXITCODE)." }
+    $build = "target\$Target\release"
+    $runtime = Join-Path $build "crt"
+    if (Test-Path -LiteralPath $runtime) { Remove-Item -LiteralPath $runtime -Recurse -Force }
+    & "$PSScriptRoot\windows-runtime.ps1" -Destination $runtime -Target $Target
     $dir = Join-Path $env:LOCALAPPDATA "Programs\herdr-app"
-    Install-HerdrAppFiles "target\release\herdr-app.exe" "assets\icons\herdr-ui-icon-clean.svg" $dir
+    Install-HerdrAppFiles "$build\herdr-app.exe" "assets\icons\herdr-ui-icon-clean.svg" $dir $runtime
 } finally {
     Pop-Location
 }

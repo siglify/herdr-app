@@ -16,3 +16,11 @@ just notices
 The copies here come from the sources pinned in `inventory.json`. simdutf's embedded version is 9.0.0 even though Ghostty's Zig package wrapper still says 5.2.8; its TH-derived CPU detection notice is included too. Highway's Apache and BSD notices are both retained. uucode's own license and both nested licenses are included. Zig's MIT license and musl's copyright file cover the bundled Zig runtime and its musl-derived math routines, as well as builds that contain musl itself. The released Linux app uses the system glibc. The core is downloaded separately and ships its own notices.
 
 Cargo-about covers the vendored GPUI crates as part of the Cargo graph. The separate native inventory covers Ghostty's VT build, not the unrelated libraries used only by Ghostty's full desktop app.
+
+Windows packages include the release Visual C++ CRT DLLs from the build toolchain's
+`VC/Redist/MSVC` directory. `scripts/windows-runtime.ps1` copies them unmodified
+beside the executable; the installer and updater replace them with the app.
+Their runtime license is copied from Microsoft's
+[Visual C++ Runtime 2015–2022 terms](https://visualstudio.microsoft.com/license-terms/vs2022-cruntime/).
+Redistribution is covered by the build toolchain's Visual Studio license and
+[redistributable file list](https://learn.microsoft.com/en-us/visualstudio/releases/2022/redistribution).
