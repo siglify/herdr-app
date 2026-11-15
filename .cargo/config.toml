@@ -1,4 +1,4 @@
-# Link the C runtime into herdr-app.exe, so Windows needs no Visual C++
-# Redistributable installed to start the app.
-[target.'cfg(all(windows, target_env = "msvc"))']
+# Windows: the C runtime inside the exe, so a clean machine without the
+# Visual C++ redistributable runs herdr-app (as herdr-core does).
+[target.x86_64-pc-windows-msvc]
 rustflags = ["-C", "target-feature=+crt-static"]
