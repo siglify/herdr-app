@@ -26,6 +26,7 @@ on:
     paths:
       - Cargo.lock
       - Cargo.toml
+      - .cargo/**
       - vendor/**
       - crates/**
       - scripts/package
